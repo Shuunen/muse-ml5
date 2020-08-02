@@ -1,0 +1,8 @@
+.cache
+.DS_Store
+.env
+*.log
+*.tgz
+dist
+node_modules
+sample.*
