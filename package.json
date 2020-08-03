@@ -44,5 +44,5 @@
     "update": "npx npm-check-updates -u",
     "watch": "parcel src/index.html --port 8000"
   },
-  "version": "1.0.0"
+  "version": "0.0.1"
 }
