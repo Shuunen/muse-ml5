@@ -1,18 +1,19 @@
 import { channelNames, MuseClient } from 'muse-js'
 import Reef from 'reefjs'
+import { throttle } from './utils'
 
 const connection = new Reef('#connection', {
   data: {
-    status: 'unknown',
+    status: 'disconnected',
     deviceName: '',
     batteryLevel: '',
     slider: 5,
     log: ''
   },
   template: (props) => `
-    <div ${props.status === 'disconnected' ? '' : 'hidden'}>
+    <div ${props.status !== 'connected' ? '' : 'hidden'}>
       <p>Status : ${props.status}</p>
-      <button onclick=connect() ${props.status === 'connected' ? 'hidden' : ''}>Connect</button>
+      <button onclick=connect() ${props.status === 'disconnected' ? '' : 'hidden'}>Connect</button>
     </div>
     <div ${props.status === 'connected' ? '' : 'hidden'}>
       <p>Status : ${props.status} ${props.deviceName.length ? `📟 ${props.deviceName}` : ''} ${props.batteryLevel.length ? `🔋 ${props.batteryLevel}%` : ''}</p>
@@ -24,38 +25,26 @@ const connection = new Reef('#connection', {
 })
 
 const client = new MuseClient()
-client.connectionStatus.subscribe((status) => {
-  connection.data.status = status ? 'connected' : 'disconnected'
-})
 
 const leftEyeChannel = channelNames.indexOf('AF7')
 const rightEyeChannel = channelNames.indexOf('AF8')
 
-let luminosity = 98
-const changeLuminosity = (increase = false) => {
-  luminosity = increase ? Math.min(luminosity + 10, 100) : Math.max(luminosity - 10, 0)
-  document.body.style.backgroundColor = `hsl(0deg 0% ${luminosity}%)`
+const updateLuminosity = () => {
+  const l = connection.data.slider * 10
+  console.log('updateLuminosity', l)
+  document.body.style.backgroundColor = `hsl(0deg 0% ${l}%)`
+  document.body.style.color = `hsl(0deg 0% ${130 - l}%)`
 }
 
-const stackOverflow = name => {
-  console.log(`Threshold reached : ${name}`)
-  if (name === 'left') connection.data.slider = Math.max(connection.data.slider - 1, 0)
-  else if (name === 'right') connection.data.slider = Math.min(connection.data.slider + 1, 10)
+const onEyeBlink = side => {
+  console.log(`Threshold reached : ${side}`)
+  if (side === 'left') connection.data.slider = Math.max(connection.data.slider - 1, 0)
+  else if (side === 'right') connection.data.slider = Math.min(connection.data.slider + 1, 10)
   else return
-  changeLuminosity(name === 'right')
+  updateLuminosity()
 }
 
-let stack = {}
-const overflow = 3
-const lifespan = 1000
-const stackAdd = (name) => {
-  if (!stack[name]) {
-    stack[name] = 0 // give life
-    setTimeout(() => (delete stack[name]), lifespan) // and plan death
-  }
-  stack[name]++
-  if (stack[name] === overflow) stackOverflow(name)
-}
+const onEyeBlinkThrottled = throttle(onEyeBlink, 300, { leading: true, trailing: false })
 
 const plot = (data) => {
   const eye = data.electrode === leftEyeChannel && "left" || data.electrode === rightEyeChannel && "right" || null
@@ -63,14 +52,19 @@ const plot = (data) => {
   const value = Math.round(Math.max(...data.samples.map(n => Math.abs(n))))
   if (value < 300) return
   console.log(`${eye} (${value})`)
-  stackAdd(eye)
+  onEyeBlinkThrottled(eye)
 }
 
 window.connect = async () => {
-  console.log('connecting...')
+  connection.data.status = 'awaiting for device'
   client.enableAux = true
-  await client.connect()
-  await client.start()
+  let error = await client.connect().catch(e => e.message)
+  if (error) return (connection.data.status = 'disconnected') && console.error(error)
+  connection.data.status = 'getting initial data'
+  error = await client.start().catch(e => e.message)
+  if (error) return console.error(error)
+  connection.data.status = 'connected'
+  updateLuminosity()
   connection.data.deviceName = client.deviceName
   client.telemetryData.subscribe(data => (connection.data.batteryLevel = data.batteryLevel.toString()))
   client.eegReadings.subscribe(data => plot(data))

@@ -19,4 +19,5 @@
 - [Sakura.css](https://oxal.org/projects/sakura) : a minimal classless css framework / theme for HTML semantic lovers
 - [Serve](https://github.com/vercel/serve) : easy to use static file server
 - [Shields.io](https://shields.io) : for the nice badges on top of this readme
+- [Strabo](https://www.iconfinder.com/icons/71526/contrast_icon) : for the contrast icons
 - [Travis-ci.org](https://travis-ci.org) : for providing free continuous deployments
