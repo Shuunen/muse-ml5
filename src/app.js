@@ -1,7 +1,8 @@
 import Reef from 'reefjs'
 
-window.app = new Reef('#app', {
+export const app = new Reef('#app', {
   template: () => `
     <div id=connection></div>
+    <div id=slider></div>
   `
 })
