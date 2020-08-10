@@ -14,7 +14,6 @@ export const store = new Reef.Store({
     },
     setDeviceName (props, name) {
       props.deviceName = name
-      updateLuminosity()
     },
     setBatteryLevel (props, level) {
       props.batteryLevel = level
@@ -29,6 +28,8 @@ export const store = new Reef.Store({
 const updateLuminosity = () => {
   const l = store.data.slider * 10
   console.log('updateLuminosity', l)
-  document.body.style.backgroundColor = `hsl(0deg 0% ${l}%)`
-  document.body.style.color = `hsl(0deg 0% ${130 - l}%)`
+  document.body.style.backgroundColor = `hsl(0deg 0% ${l - 10}%)`
+  document.body.style.color = `hsl(0deg 0% ${140 - l}%)`
 }
+
+updateLuminosity()
