@@ -12,9 +12,3 @@ export const slider = new Reef('#slider', {
   `,
   attachTo: app
 })
-
-// simulate eye blink via keyboard on localhost
-document.location.hostname === 'localhost' && window.addEventListener('keydown', e => {
-  if (e.key === 'ArrowLeft') store.do('eyeBlink', 'left')
-  else if (e.key === 'ArrowRight') store.do('eyeBlink', 'right')
-})

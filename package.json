@@ -39,6 +39,7 @@
     "postversion": "git push && git push --tags",
     "prebuild": "rimraf dist/*",
     "preversion": "npm run ci",
+    "serve": "serve dist",
     "start": "run-s build serve",
     "test": "echo no test yet",
     "update": "npx npm-check-updates -u",
