@@ -5,7 +5,7 @@ export const store = new Reef.Store({
     status: 'disconnected',
     deviceName: '',
     batteryLevel: '',
-    slider: 5
+    slider: 0
   },
   // once setters are defined, this is the only way to update above data
   setters: {
@@ -33,3 +33,9 @@ const updateLuminosity = () => {
 }
 
 updateLuminosity()
+
+// simulate eye blink via keyboard on localhost
+document.location.hostname === 'localhost' && window.addEventListener('keydown', e => {
+  if (e.key === 'ArrowLeft') store.do('eyeBlink', 'left')
+  else if (e.key === 'ArrowRight') store.do('eyeBlink', 'right')
+})

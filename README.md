@@ -7,7 +7,20 @@
 [![LGTM Grade](https://img.shields.io/lgtm/grade/javascript/github/Shuunen/muse-ml5.svg)](https://lgtm.com/projects/g/Shuunen/muse-ml5)
 [![Scrutinizer Score](https://scrutinizer-ci.com/g/Shuunen/muse-ml5/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Shuunen/muse-ml5)
 
-> a test project to play with Muse EEG headset & ML5.js
+> a test project to play with Muse EEG headset
+
+![preview](docs/preview.jpg)
+
+## Usage
+
+- online : go to [muse-ml5.netlify.app](https://muse-ml5.netlify.app)
+- or locally : clone this repo, `npm install` & `npm start`
+
+Then use your 2016 Muse headset to play.
+
+## TODO
+
+Found something to do with ml5 😅
 
 ## Thanks
 
@@ -20,4 +33,5 @@
 - [Serve](https://github.com/vercel/serve) : easy to use static file server
 - [Shields.io](https://shields.io) : for the nice badges on top of this readme
 - [Strabo](https://www.iconfinder.com/icons/71526/contrast_icon) : for the contrast icons
+- [PngTree](https://pngtree.com/freepng/raise-the-index-finger-gesture-illustration_4558386.html) : for the finger & ring illustrations
 - [Travis-ci.org](https://travis-ci.org) : for providing free continuous deployments
