@@ -1,25 +1,25 @@
 button {
-  padding: .6rem 1.2rem;
   border-radius: .5rem;
+  padding: .6rem 1.2rem;
 }
 
 #logger {
-  overflow: auto;
-  max-height: 20rem;
   display: block;
+  max-height: 20rem;
+  overflow: auto;
 }
 
 input[type="range"].slider {
   -webkit-appearance: none;
-  width: 100%;
-  height: 10px;
-  padding: 0;
-  border-radius: 5px;
   background: #d3d3d3;
+  border-radius: 5px;
+  height: 10px;
+  opacity: .7;
   outline: none;
-  opacity: 0.7;
+  padding: 0;
   -webkit-transition: .2s;
   transition: opacity .2s;
+  width: 100%;
 }
 
 .slider:hover {
@@ -29,41 +29,41 @@ input[type="range"].slider {
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 24px;
-  height: 24px;
+  background: url("icon-contrast.png");
   border: 0;
-  background: url('icon-contrast.png');
   cursor: pointer;
+  height: 24px;
+  width: 24px;
 }
 
 #illustration {
-  width: 100%;
   height: 400px;
   position: relative;
+  width: 100%;
 }
 
 .illustration {
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  left: 0;
   position: absolute;
   top: 0;
-  left: 0;
   width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-repeat: no-repeat;
 }
 
 .illustration.ring-top {
+  background-image: url("ring-top.png");
   z-index: 3;
-  background-image: url('ring-top.png');
 }
 
 .illustration.finger {
-  z-index: 2;
+  background-image: url("finger.png");
   background-position-x: 150px;
-  background-image: url('finger.png');
+  z-index: 2;
 }
 
 .illustration.ring-bot {
+  background-image: url("ring-bot.png");
   z-index: 1;
-  background-image: url('ring-bot.png');
 }

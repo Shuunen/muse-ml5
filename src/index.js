@@ -6,6 +6,6 @@ import './connection'
 import './illustration'
 // import './slider'
 
-app.render();
+app.render()
 
 console.log('app start')

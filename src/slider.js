@@ -10,5 +10,5 @@ export const slider = new Reef('#slider', {
       Blink left or right to move the cursor and change the global lighting.
     </div>
   `,
-  attachTo: app
+  attachTo: app,
 })

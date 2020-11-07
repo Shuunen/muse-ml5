@@ -4,13 +4,14 @@ import { app } from './app'
 import { store } from './store'
 import { throttle } from './utils'
 
+// eslint-disable-next-line no-new
 new Reef('#connection', {
   store,
   template: (props) => `
     <p>Status : ${props.status} ${props.deviceName.length ? `📟 ${props.deviceName}` : ''} ${props.batteryLevel.length ? `🔋 ${props.batteryLevel}%` : ''}</p>
     <button onclick=connect() ${props.status === 'disconnected' ? '' : 'hidden'}>Connect</button>
   `,
-  attachTo: app
+  attachTo: app,
 })
 
 const client = new MuseClient()
@@ -22,7 +23,7 @@ const onEyeBlink = side => store.do('eyeBlink', side)
 const onEyeBlinkThrottled = throttle(onEyeBlink, 300, { leading: true, trailing: false })
 
 const plot = (data) => {
-  const eye = data.electrode === leftEyeChannel && "left" || data.electrode === rightEyeChannel && "right" || null
+  const eye = (data.electrode === leftEyeChannel && 'left') || (data.electrode === rightEyeChannel && 'right') || null
   if (!eye) return
   const value = Math.round(Math.max(...data.samples.map(n => Math.abs(n))))
   if (value < sensorNoiseLevel || value === sensorDefaultValue) return

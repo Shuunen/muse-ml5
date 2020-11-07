@@ -17,5 +17,5 @@ export const illustration = new Reef('#illustration', {
     <p ${props.slider < 2 ? '' : 'hidden'} style="position: absolute;bottom: 0;font-style: italic;opacity: .5;">Blink left or right to move the wedding ring.</p>
     <p ${props.slider < 8 ? 'hidden' : ''} style="color: darkblue; font-size: 60px; transform: rotate(-15deg); position: absolute; bottom: 20px;">Mazel tov 💕</p>
   `,
-  attachTo: app
+  attachTo: app,
 })

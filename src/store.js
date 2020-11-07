@@ -5,7 +5,7 @@ export const store = new Reef.Store({
     status: 'disconnected',
     deviceName: '',
     batteryLevel: '',
-    slider: 0
+    slider: 0,
   },
   // once setters are defined, this is the only way to update above data
   setters: {
@@ -21,8 +21,8 @@ export const store = new Reef.Store({
     eyeBlink (props, side) {
       props.slider = Math.min(Math.max(side === 'right' ? props.slider + 1 : props.slider - 1, 0), 10)
       updateLuminosity()
-    }
-  }
+    },
+  },
 })
 
 const updateLuminosity = () => {
