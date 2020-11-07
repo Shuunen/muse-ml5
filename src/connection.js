@@ -7,9 +7,9 @@ import { throttle } from './utils'
 // eslint-disable-next-line no-new
 new Reef('#connection', {
   store,
-  template: (props) => `
-    <p>Status : ${props.status} ${props.deviceName.length ? `📟 ${props.deviceName}` : ''} ${props.batteryLevel.length ? `🔋 ${props.batteryLevel}%` : ''}</p>
-    <button onclick=connect() ${props.status === 'disconnected' ? '' : 'hidden'}>Connect</button>
+  template: (properties) => `
+    <p>Status : ${properties.status} ${properties.deviceName.length > 0 ? `📟 ${properties.deviceName}` : ''} ${properties.batteryLevel.length > 0 ? `🔋 ${properties.batteryLevel}%` : ''}</p>
+    <button onclick=connect() ${properties.status === 'disconnected' ? '' : 'hidden'}>Connect</button>
   `,
   attachTo: app,
 })
@@ -23,7 +23,7 @@ const onEyeBlink = side => store.do('eyeBlink', side)
 const onEyeBlinkThrottled = throttle(onEyeBlink, 300, { leading: true, trailing: false })
 
 const plot = (data) => {
-  const eye = (data.electrode === leftEyeChannel && 'left') || (data.electrode === rightEyeChannel && 'right') || null
+  const eye = (data.electrode === leftEyeChannel && 'left') || (data.electrode === rightEyeChannel && 'right') || undefined
   if (!eye) return
   const value = Math.round(Math.max(...data.samples.map(n => Math.abs(n))))
   if (value < sensorNoiseLevel || value === sensorDefaultValue) return
@@ -41,10 +41,10 @@ const onConnected = () => {
 window.connect = async () => {
   store.do('updateStatus', 'awaiting for device')
   client.enableAux = true
-  let error = await client.connect().catch(e => e.message)
-  if (error) return store.do('updateStatus', 'disconnected') && console.error(error)
+  let errorMessage = await client.connect().catch(error => error.message)
+  if (errorMessage) return store.do('updateStatus', 'disconnected') && console.error(errorMessage)
   store.do('updateStatus', 'getting initial data')
-  error = await client.start().catch(e => e.message)
-  if (error) return store.do('updateStatus', 'disconnected') && console.error(error)
+  errorMessage = await client.start().catch(error => error.message)
+  if (errorMessage) return store.do('updateStatus', 'disconnected') && console.error(errorMessage)
   onConnected()
 }

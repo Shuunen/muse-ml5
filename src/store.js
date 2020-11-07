@@ -9,17 +9,17 @@ export const store = new Reef.Store({
   },
   // once setters are defined, this is the only way to update above data
   setters: {
-    updateStatus (props, status) {
-      props.status = status
+    updateStatus (properties, status) {
+      properties.status = status
     },
-    setDeviceName (props, name) {
-      props.deviceName = name
+    setDeviceName (properties, name) {
+      properties.deviceName = name
     },
-    setBatteryLevel (props, level) {
-      props.batteryLevel = level
+    setBatteryLevel (properties, level) {
+      properties.batteryLevel = level
     },
-    eyeBlink (props, side) {
-      props.slider = Math.min(Math.max(side === 'right' ? props.slider + 1 : props.slider - 1, 0), 10)
+    eyeBlink (properties, side) {
+      properties.slider = Math.min(Math.max(side === 'right' ? properties.slider + 1 : properties.slider - 1, 0), 10)
       updateLuminosity()
     },
   },
@@ -35,7 +35,7 @@ const updateLuminosity = () => {
 updateLuminosity()
 
 // simulate eye blink via keyboard on localhost
-document.location.hostname === 'localhost' && window.addEventListener('keydown', e => {
-  if (e.key === 'ArrowLeft') store.do('eyeBlink', 'left')
-  else if (e.key === 'ArrowRight') store.do('eyeBlink', 'right')
+document.location.hostname === 'localhost' && window.addEventListener('keydown', event => {
+  if (event.key === 'ArrowLeft') store.do('eyeBlink', 'left')
+  else if (event.key === 'ArrowRight') store.do('eyeBlink', 'right')
 })

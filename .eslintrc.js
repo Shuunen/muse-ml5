@@ -7,9 +7,11 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'standard',
+    'plugin:unicorn/recommended',
   ],
   plugins: [
     'html',
+    'unicorn',
   ],
   rules,
 }
