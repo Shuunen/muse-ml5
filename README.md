@@ -29,9 +29,13 @@ So I bought a **2016 Muse headset** and made my own experiment ;)
 
 Then use your **2016 Muse headset** & your eyes to play.
 
+## Now
+
+Because my POC is done, I archived this project.
+
 ## TODO
 
-- [ ] found something to do with ml5 😅 as you can see in the project name, I planned to use ML5 here
+- [ ] found something to do with ml5 😅 as you can see in the project name, I originally planned to use ML5 here
 
 ## Thanks
 
